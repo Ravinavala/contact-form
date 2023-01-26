@@ -58,3 +58,6 @@ if (!defined('CUSTOM_FORM_PLUGIN_BASENAME')) {
     define('CUSTOM_FORM_PLUGIN_BASENAME', plugin_basename(__FILE__));
 }
 
+define('CUSTOM_FORM_INCLUDE_PATH', CUSTOM_FORM_PLUGIN_PATH);
+// Define admin html folder Path
+define('CUSTOM_FORM_ADMIN_HTML_PATH', CUSTOM_FORM_INCLUDE_PATH . 'admin/html/');
