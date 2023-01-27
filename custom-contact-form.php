@@ -62,6 +62,38 @@ define('CUSTOM_FORM_INCLUDE_PATH', CUSTOM_FORM_PLUGIN_PATH);
 // Define admin html folder Path
 define('CUSTOM_FORM_ADMIN_HTML_PATH', CUSTOM_FORM_INCLUDE_PATH . 'admin/html/');
 
+
+/** The code that runs during plugin activation (but not during updates). */
+function create_custom_db_plugin_activate() {
+    global $wpdb;
+    $charset_collate = $wpdb->get_charset_collate();
+    $table_name = $wpdb->prefix . 'custom_contact_form_table';
+
+    $sql = "CREATE TABLE $table_name (
+        id mediumint(9) NOT NULL AUTO_INCREMENT,
+        name varchar(255) NOT NULL,
+        email varchar(255) NOT NULL,
+        contact_no varchar(255) NOT NULL,
+        comment text NOT NULL,
+        country varchar(255) NOT NULL,
+        UNIQUE KEY id (id)
+    ) $charset_collate;";
+
+    require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+    dbDelta($sql);
+}
+
+/** The code that runs when plugin uninstall. */
+function custom_form_plugin_uninstall() {
+    global $wpdb;
+    $table_name = $wpdb->prefix . 'custom_contact_form_table';
+    $sql = "DROP TABLE IF EXISTS $table_name";
+    $wpdb->query($sql);
+}
+
+register_activation_hook(__FILE__, 'create_custom_db_plugin_activate');
+register_uninstall_hook(__FILE__, 'custom_form_plugin_uninstall');
+
 /* The core plugin class that is used to define internationalization, */
 require CUSTOM_FORM_INCLUDE_PATH . 'includes/class-custom-form.php';
 
