@@ -61,3 +61,8 @@ if (!defined('CUSTOM_FORM_PLUGIN_BASENAME')) {
 define('CUSTOM_FORM_INCLUDE_PATH', CUSTOM_FORM_PLUGIN_PATH);
 // Define admin html folder Path
 define('CUSTOM_FORM_ADMIN_HTML_PATH', CUSTOM_FORM_INCLUDE_PATH . 'admin/html/');
+
+/* The core plugin class that is used to define internationalization, */
+require CUSTOM_FORM_INCLUDE_PATH . 'includes/class-custom-form.php';
+
+$admin = new Custom_Form_Admin();
