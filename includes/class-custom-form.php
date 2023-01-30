@@ -49,7 +49,27 @@ class Custom_Form {
 
     /** Add custom shortcode */
     function display_contact_form() {
-        $output = 'Form shortcode';
+        $output = '<form id="custom_contact_form" method="post" class="contact-form">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+        <label for="contact_no">Contact Number:</label>
+        <input type="tel" id="contact_no" name="contact_no" required>
+        <label for="comment">Comment:</label>
+        <textarea id="comment" name="comment" required></textarea>
+        <label for="country">Country:</label>
+        <select id="country" name="country" required>
+            <option value="" disabled selected>Select a country</option>
+            <option value="US">United States</option>
+            <option value="CA">Canada</option>
+            <option value="MX">Mexico</option>
+        </select>
+        <input type="submit" value="Submit">
+        <div id="message"></div>
+        <div id="cfserr_msg"></div>
+        <div id="cfs_msg"></div>
+        </form>';
         return $output;
     }
 
