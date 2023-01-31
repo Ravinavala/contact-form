@@ -14,7 +14,7 @@ class Custom_Form_Admin {
      *
      * @since    1.0.0
      * @access   private
-     * @var      string    $version    The current version of this plugin.
+     * @var      string  $version The current version of this plugin.
      */
     private $version;
 
@@ -22,8 +22,8 @@ class Custom_Form_Admin {
      * Initialize the class and set its properties.
      *
      * @since    1.0.0
-     * @param      string    $plugin_name       The name of this plugin.
-     * @param      string    $version    The version of this plugin.
+     * @param      string $plugin_name  The name of this plugin.
+     * @param      string $version The version of this plugin.
      */
     public function __construct() {
         add_action('admin_menu', array($this, 'customform_admin_menu'));
