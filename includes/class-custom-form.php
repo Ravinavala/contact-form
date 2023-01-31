@@ -1,10 +1,8 @@
 <?php
 
 class Custom_Form {
-    /*     * * The current version of the plugin */
 
     protected $version;
-    protected $customendpoint;
 
     /**
      * Define the core functionality of the plugin.
@@ -15,14 +13,17 @@ class Custom_Form {
      */
     public function __construct() {
         $this->load_dependencies();
+
         add_action('wp_enqueue_scripts', array($this, 'print_script'));
         add_action('admin_enqueue_scripts', array($this, 'cf_plugin_admin_styles'));
+
         add_shortcode('custom_contact_form', array($this, 'display_contact_form'));
+
+        add_action('wp_ajax_contactform_data', array($this, 'contactform_data_callback'));
+        add_action('wp_ajax_nopriv_contactform_data', array($this, 'contactform_data_callback'));
     }
 
-    /*     * * Load the required dependencies for this plugin.
-     *
-     * Include the following files that make up the plugin: */
+    /** * Load the required dependencies for this plugin */
 
     private function load_dependencies() {
         require_once CUSTOM_FORM_PLUGIN_PATH . 'admin/class-custom-form-admin.php';
@@ -71,6 +72,34 @@ class Custom_Form {
         <div id="cfs_msg"></div>
         </form>';
         return $output;
+    }
+
+    /* Ajax call back function, to add user data in custom table */
+
+    public function contactform_data_callback() {
+        $output = "";
+        if (!empty($_POST)) {
+            global $wpdb;
+            $table_name = $wpdb->prefix . 'custom_contact_form_table';
+
+            $wpdb->insert(
+                    $table_name,
+                    array(
+                        'name' => wp_strip_all_tags($_POST['name']),
+                        'email' => sanitize_email($_POST['email']),
+                        'contact_no' => sanitize_text_field($_POST['contact_no']),
+                        'comment' => sanitize_textarea_field($_POST['comment']),
+                        'country' => sanitize_text_field($_POST['country'])
+                    ),
+                    array('%s', '%s', '%s', '%s', '%s')
+            );
+
+            $output = $wpdb->insert_id;
+        } else {
+            $output = 0;
+        }
+        echo $output;
+        exit();
     }
 
 }
