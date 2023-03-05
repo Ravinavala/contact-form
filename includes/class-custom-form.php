@@ -43,7 +43,7 @@ class Custom_Form {
 
     // Enqueue the CSS file for the plugin's admin pages
     function cf_plugin_admin_styles() {
-        if ($_GET['page'] == "custom_form_settings") {
+        if (isset($_GET['page']) && $_GET['page'] == "custom_form_settings") {
             wp_enqueue_style('my_plugin_admin_css', CUSTOM_FORM_PLUGIN_URL . '/assets/css/userdata.css');
         }
     }
